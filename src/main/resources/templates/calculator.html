@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html  xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Calculator</title>
+</head>
+<body>
+
+<form class="form-horizontal" th:action="@{resolver}" th:object="${calc}">
+
+    <fieldset>
+        <legend>Calculadora</legend>
+        <div class="form-group">
+            <label for="number1" class="col-md-4 control-label">Numero 1</label>
+            <div class="col-md-4">
+                <input id="number1" name="number1" th:field="*{num1}" type="number" class="form-control" placeholder="Introduce numero 1" required=""></input>
+            </div>
+        </div>
+        <label for="operator" class="col-md-4 control-label">Operador</label>
+        <div class="col-md-4">
+            +<input type="radio" name="operator" id="operator" th:field="*{operator}" class="form-control" value="+" checked></input>
+            -<input type="radio" name="operator" id="operator" th:field="*{operator}" class="form-control" value="-" ></input>
+            *<input type="radio" name="operator" id="operator" th:field="*{operator}" class="form-control" value="*" ></input>
+            /<input type="radio" name="operator" id="operator" th:field="*{operator}" class="form-control" value="/" ></input>
+        </div>
+        </div>
+        <label for="number2" class="col-md-4 control-label">Numero 2</label>
+        <div class="col-md-4">
+            <input id="number2" name="number2" th:field="*{num2}" type="number" class="form-control" placeholder="Introduce numero 2" required=""></input>
+        </div>
+        <span th:text="${result}"></span>
+        <button type="submit" name="result" value="Resultado">Resultado</button>
+    </div>
+    </fieldset>
+
+</form>
+
+<form class="form-horizontal" th:action="@{resolverWatts}" th:object="${calcWatt}">
+
+    <fieldset>
+        <legend>Calculadora Wattios</legend>
+        <div class="form-group">
+            <label for="volts" class="col-md-4 control-label">Voltios</label>
+            <div class="col-md-4">
+                <input id="volts" name="volts" th:field="*{volts}" type="number" class="form-control" placeholder="Voltios" required=""></input>
+            </div>
+        </div>
+                <div class="form-group" th:classappend="${#fields.hasErrors('amps')}?'has-error'">
+            <label for="amper" class="col-md-4 control-label">Amperios</label>
+            <div class="col-md-4">
+            <span th:if="${#fields.hasErrors('amps')}" th:errors="*amps"></span>
+                <input id="amper" name="amper" th:field="*{amps}" type="number" class="form-control" placeholder="Introduce Amperios" required=""></input>
+            </div>
+                    <span th:text="${resultWatt}"></span>
+        <button type="submit" name="resultWatts" value="Resultado">Resultado</button>
+        </div>
+ 
+      
+    </fieldset>
+
+</form>
+
+<div th:object="${calc}">
+	<ul th:each="nombre:*{cosas}">
+		<li th:text="${nombre}">
+	</ul>
+</div>
+
+</body>
+</html>
