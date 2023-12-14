@@ -9,19 +9,9 @@ public class Calculator {
 	private double num2;
 	private char operator;
 	
-	private String[] cosas = {"Jesus", "Pino", "X","Dario", "Horsis"};
-	
-	
 
 	
-	
-	public String[] getCosas() {
-		return cosas;
-	}
 
-	public void setCosas(String[] cosas) {
-		this.cosas = cosas;
-	}
 
 	public double getNum1() {
 		return num1;
