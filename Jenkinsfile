@@ -37,10 +37,6 @@ pipeline {
     }
 
     post {
-        always {
-            // Siempre ejecutar esta etapa, independientemente del resultado de las etapas anteriores
-            // Por ejemplo, puedes enviar notificaciones por correo electrónico aquí
-        }
         success {
             // Acciones a realizar si el pipeline se ejecuta exitosamente
             echo 'Pipeline ejecutado exitosamente!'
