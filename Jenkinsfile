@@ -20,7 +20,9 @@ pipeline {
         
         stage('Construir Aplicación') {
             steps {
-                sh 'mvn clean package'
+                 dir('/var/lib/jenkins/workspace/Automatizacion del trabajo calculatorSpring Josemi') {
+                    sh 'mvn clean package'
+                 }
             }
         }
         
