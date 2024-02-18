@@ -13,11 +13,6 @@ pipeline {
             }
         }
         
-        stage('Construir Aplicación') {
-            steps {
-                sh 'mvn clean package'
-            }
-        }
         
         stage('Construir Imagen Docker') {
             steps {
