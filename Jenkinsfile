@@ -1,6 +1,11 @@
 pipeline {
     agent any
     
+    
+    tools {
+        maven 'Maven'
+    }
+
     environment {
         DOCKER_IMAGE = 'tomcat:latest'
         APP_NAME = 'calculadora'
@@ -13,6 +18,11 @@ pipeline {
             }
         }
         
+        stage('Construir Aplicación') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
         
         stage('Construir Imagen Docker') {
             steps {
