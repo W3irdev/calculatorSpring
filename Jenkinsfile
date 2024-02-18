@@ -1,49 +1,40 @@
 pipeline {
     agent any
-
+    
+    environment {
+        DOCKER_IMAGE = 'tomcat:latest'
+        APP_NAME = 'calculadora'
+    }
+    
     stages {
-        stage('Checkout') {
+        stage('Clonar Repositorio') {
             steps {
-                // Obtener el código fuente del repositorio
-                git branch: 'main', url: 'https://github.com/W3irdev/calculatorSpring.git'
+               git branch: 'main', url: 'https://github.com/W3irdev/calculatorSpring.git'
             }
         }
-
-        stage('Build') {
+        
+        stage('Construir Aplicación') {
             steps {
-                // Compilar la aplicación con Maven
                 sh 'mvn clean package'
             }
         }
-
-
-        stage('Deploy') {
-            environment {
-                // Definir variables de entorno para el despliegue
-                TOMCAT_HOME = '/ruta/al/directorio/de/tomcat'
-            }
+        
+        stage('Construir Imagen Docker') {
             steps {
-                // Copiar el archivo WAR generado al directorio webapps de Tomcat
-                sh "cp target/nombre-del-archivo.war $TOMCAT_HOME/webapps/"
+                script {
+                    docker.build("${DOCKER_IMAGE}")
+                }
             }
         }
-
-        stage('Cleanup') {
+        
+        stage('Desplegar en Tomcat') {
             steps {
-                // Limpieza de archivos temporales u otros recursos
-                sh 'mvn clean'
+                script {
+                    docker.image("${DOCKER_IMAGE}").push('latest')
+                }
+                sh 'docker run -d --name ${APP_NAME} -p 8080:8080 ${DOCKER_IMAGE}'
             }
         }
-    }
 
-    post {
-        success {
-            // Acciones a realizar si el pipeline se ejecuta exitosamente
-            echo 'Pipeline ejecutado exitosamente!'
-        }
-        failure {
-            // Acciones a realizar si el pipeline falla
-            echo 'El pipeline ha fallado, revisa los registros para más detalles.'
-        }
     }
 }
